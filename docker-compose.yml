@@ -1,6 +1,7 @@
 services:
   app:
-    build: .
-    volumes:
-      - ./app:/app
-    command: make dev
+    image: akotova/devops-for-developers-project-74
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    command: make test
