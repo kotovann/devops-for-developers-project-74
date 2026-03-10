@@ -20,6 +20,13 @@ jobs:
           username: ${{ secrets.D_USERNAME }}
           password: ${{ secrets.D_TOKEN }}
 
+      - name: Temporary .env
+        run: |
+          echo "DATABASE_USERNAME=postgres" >> .env
+          echo "DATABASE_PASSWORD=password" >> .env
+          echo "DATABASE_NAME=postgres" >> .env
+          echo "DATABASE_HOST=db" >> .env
+
       - name: Run tests
         run: make ci
 
