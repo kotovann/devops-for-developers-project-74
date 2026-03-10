@@ -1,7 +1,21 @@
 services:
+  db:
+    image: postgres:latest
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
   app:
     image: akotova/devops-for-developers-project-74
     build:
       context: .
       dockerfile: Dockerfile.production
     command: make test
+    env_file:
+      - .env
+    depends_on:
+      - db
